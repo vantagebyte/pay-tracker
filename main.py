@@ -28,8 +28,11 @@ while True:
         entry = {'type': 'expense', 'amount': amount, 'category': category}
         entries.append(entry)
         expense += amount
-        print(entries)
+       
     elif choice == '3':
+        for entry in entries:
+            print(f"{entry['type']} - ${entry['amount']:.2f} - {entry['category']}")
+
         print(f'Pay total is : ${pay:.2f}')
         print(f'Expense total is : ${expense:.2f}')
     else:
