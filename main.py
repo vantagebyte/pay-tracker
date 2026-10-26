@@ -1,7 +1,12 @@
+import json
+
+def save_entries():
+    with open('data.json', 'w') as file:
+        json.dump(entries, file)
 
 pay = 0
 expense = 0
-entries = []
+entries = []    
 
 while True:
         
@@ -14,6 +19,7 @@ while True:
     choice = input('Pick an option: ')
 
     if choice == '4':
+        save_entries()
         break
     elif choice == '1':
         amount = float(input('Pay: '))
@@ -21,6 +27,7 @@ while True:
         entry = {'type': 'pay', 'amount': amount, 'category': category}
         entries.append(entry)
         pay += amount
+        save_entries()
 
     elif choice == '2':
         amount = float(input('Amount: '))
@@ -28,6 +35,7 @@ while True:
         entry = {'type': 'expense', 'amount': amount, 'category': category}
         entries.append(entry)
         expense += amount
+        save_entries()
        
     elif choice == '3':
         for entry in entries:
