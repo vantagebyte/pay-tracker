@@ -1,7 +1,7 @@
 
 pay = 0
 expense = 0
-
+entries = []
 
 while True:
         
@@ -16,9 +16,19 @@ while True:
     if choice == '4':
         break
     elif choice == '1':
-        pay += float(input('Add pay: '))
+        amount = float(input('Pay: '))
+        category = input('Category: ')
+        entry = {'type': 'pay', 'amount': amount, 'category': category}
+        entries.append(entry)
+        pay += amount
+
     elif choice == '2':
-        expense += float(input('Add expense: '))
+        amount = float(input('Amount: '))
+        category = input('Category: ')
+        entry = {'type': 'expense', 'amount': amount, 'category': category}
+        entries.append(entry)
+        expense += amount
+        print(entries)
     elif choice == '3':
         print(f'Pay total is : ${pay:.2f}')
         print(f'Expense total is : ${expense:.2f}')
