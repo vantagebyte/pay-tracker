@@ -4,9 +4,16 @@ def save_entries():
     with open('data.json', 'w') as file:
         json.dump(entries, file)
 
+def load_entries():
+    try:
+        with open('data.json', 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return[]
+
 pay = 0
 expense = 0
-entries = []    
+entries = load_entries()    
 
 while True:
         
