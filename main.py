@@ -56,6 +56,7 @@ while True:
         pay_total = 0
         expense_total = 0
         
+        
         for entry in entries:
             print(f"{entry['type']} - ${entry['amount']:.2f} - {entry['category']}")
             if entry['type'] == 'pay':
@@ -66,6 +67,11 @@ while True:
 
         print(f'Pay total is : ${pay_total:.2f}')
         print(f'Expense total is : ${expense_total:.2f}')
+        balance_total = pay_total - expense_total
+        print(f'Balance is : ${balance_total:.2f}')
+        if balance_total < 0 :
+            print("You're over budget")
+            
     else:
         print('Invalid input. Please select a number from the menu.')
 
