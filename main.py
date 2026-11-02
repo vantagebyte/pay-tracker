@@ -31,11 +31,12 @@ while True:
     print('1. Add pay')
     print('2. Add expense')
     print('3. View')
-    print('4. Quit')
+    print('4. Delete entry')
+    print('5. Quit')
 
     choice = input('Pick an option: ')
 
-    if choice == '4':
+    if choice == '5':
         save_entries()
         break
     elif choice == '1':
@@ -56,13 +57,13 @@ while True:
         pay_total = 0
         expense_total = 0
         
-        
-        for entry in entries:
-            print(f"{entry['type']} - ${entry['amount']:.2f} - {entry['category']}")
+        for i, entry in enumerate(entries, start=1):
+            print(f"{i}, {entry['type']} - ${entry['amount']:.2f} - {entry['category']}")
             if entry['type'] == 'pay':
                 pay_total +=  entry['amount']
             else:
                 expense_total += entry['amount']
+                
             
 
         print(f'Pay total is : ${pay_total:.2f}')
@@ -71,6 +72,19 @@ while True:
         print(f'Balance is : ${balance_total:.2f}')
         if balance_total < 0 :
             print("You're over budget")
+
+    elif choice == '4':
+        try:
+            number = int(input('Entry number to delete: '))
+        except ValueError:
+            print('Please enter a number.')
+            continue
+        if number < 1 or number > len(entries):
+            print('No entry with that number.')
+            continue    
+        removed = entries.pop(number - 1)
+        save_entries()
+        print(f"Deleted: {removed['type']} - ${removed['amount']:.2f}")        
             
     else:
         print('Invalid input. Please select a number from the menu.')
