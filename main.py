@@ -10,6 +10,18 @@ def load_entries():
             return json.load(file)
     except FileNotFoundError:
         return[]
+    
+def get_amount(prompt):
+    while True:
+        try:
+            amount = float(input(prompt))
+        except ValueError:
+            print('Please enter a number, e.g. 250 or 49.95')
+            continue
+        if amount <= 0:
+            print('Amount must be more than 0')
+            continue
+        return amount
 
 entries = load_entries()    
 
@@ -27,14 +39,14 @@ while True:
         save_entries()
         break
     elif choice == '1':
-        amount = float(input('Pay: '))
+        amount = get_amount('Pay: ')
         category = input('Category: ')
         entry = {'type': 'pay', 'amount': amount, 'category': category}
         entries.append(entry)
         save_entries()
 
     elif choice == '2':
-        amount = float(input('Amount: '))
+        amount = get_amount('Amount: ')
         category = input('Category: ')
         entry = {'type': 'expense', 'amount': amount, 'category': category}
         entries.append(entry)
