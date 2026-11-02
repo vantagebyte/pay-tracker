@@ -22,6 +22,17 @@ def get_amount(prompt):
             print('Amount must be more than 0')
             continue
         return amount
+    
+def choose_entry(prompt):
+    try:
+        number = int(input(prompt))
+    except ValueError:
+        print('Please enter a number.')
+        return None
+    if number < 1 or number > len(entries):
+        print('No entry with that number.')
+        return None
+    return number - 1
 
 entries = load_entries()    
 
@@ -32,11 +43,12 @@ while True:
     print('2. Add expense')
     print('3. View')
     print('4. Delete entry')
-    print('5. Quit')
+    print('5. Edit entry')
+    print('6. Quit')
 
     choice = input('Pick an option: ')
 
-    if choice == '5':
+    if choice == '6':
         save_entries()
         break
     elif choice == '1':
@@ -58,7 +70,7 @@ while True:
         expense_total = 0
         
         for i, entry in enumerate(entries, start=1):
-            print(f"{i}, {entry['type']} - ${entry['amount']:.2f} - {entry['category']}")
+            print(f"{i}. {entry['type']} - ${entry['amount']:.2f} - {entry['category']}")
             if entry['type'] == 'pay':
                 pay_total +=  entry['amount']
             else:
@@ -74,17 +86,25 @@ while True:
             print("You're over budget")
 
     elif choice == '4':
-        try:
-            number = int(input('Entry number to delete: '))
-        except ValueError:
-            print('Please enter a number.')
+        index = choose_entry('Entry number to delete: ')
+        if index is None:
             continue
-        if number < 1 or number > len(entries):
-            print('No entry with that number.')
-            continue    
-        removed = entries.pop(number - 1)
+        removed = entries.pop(index)
         save_entries()
-        print(f"Deleted: {removed['type']} - ${removed['amount']:.2f}")        
+        print(f"Deleted: {removed['type']} - ${removed['amount']:.2f}")    
+
+    elif choice == '5':
+        index = choose_entry('Entry number to edit: ')
+        if index is None:
+            continue
+        entry = entries[index]
+        print(f"Editing: {entry['type']} - ${entry['amount']:.2f} - {entry['category']}")
+        entry['amount'] = get_amount('New amount: ')
+        entry['category'] = input('New category: ')
+        save_entries()
+        print('Entry updated.')
+
+
             
     else:
         print('Invalid input. Please select a number from the menu.')
