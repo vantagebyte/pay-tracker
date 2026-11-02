@@ -100,7 +100,8 @@ while True:
         entry = entries[index]
         print(f"Editing: {entry['type']} - ${entry['amount']:.2f} - {entry['category']}")
         entry['amount'] = get_amount('New amount: ')
-        entry['category'] = input('New category: ')
+        new_category = input(f"New category [{entry['category']}] (Enter to keep): ")
+        entry['category'] = new_category or entry['category']
         save_entries()
         print('Entry updated.')
 
